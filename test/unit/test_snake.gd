@@ -10,7 +10,7 @@ func before_each():
 	snake = load(SNAKE_SCENE).instance()
 	var dim = {'minX': 0, 'minY': 0, 'maxX': 100, 'maxY': 100}
 	var grid = double(GRID_SCRIPT).new()
-	stub(GRID_SCRIPT, 'get_dim').to_return(dim)
+	grid.set_dim(dim)
 	snake.set_grid(grid)
 
 func after_each():
@@ -63,6 +63,7 @@ func test_if_snake_touches_borders_sets_game_over():
 	snake.set_position(Vector2(100,100))
 	snake.set_direction(snake.DIR_DOWN)
 	gut.simulate(snake, 1, .1)
+	gut.p(snake.position)
 	assert_eq(snake.get_status(), snake.STATUS_OFF_GRID, "Snake is off grid but status is not consistent")
 
 	

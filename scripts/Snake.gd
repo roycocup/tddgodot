@@ -33,12 +33,9 @@ func move(delta):
 	check_off_grid()
 
 func check_off_grid():
-	if (position.x < grid.get_dim().minX || position.y < grid.get_dim().minY):
-		set_status(STATUS_OFF_GRID)
-	if (position.x > grid.get_dim().maxX || position.y > grid.get_dim().maxY):
+	if !grid.is_inside(position.x, position.y):
 		set_status(STATUS_OFF_GRID)
 	
-
 func get_random_dir():
 	var i = randi() % 3
 	if i == 0:

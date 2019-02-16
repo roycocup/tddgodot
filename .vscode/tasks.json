@@ -5,10 +5,10 @@
             "label": "Test",
             "type": "shell",
             "command": [
-                "/Applications/Godot.app/Contents/MacOS/Godot",  
+                "/Applications/Godot.app/Contents/MacOS/Godot",
                 "-s",
-                "--path $PWD", 
-                "addons/gut/gut_cmdln.gd", 
+                "--path $PWD",
+                "addons/gut/gut_cmdln.gd"
             ],
             "group": {
                 "kind": "build",

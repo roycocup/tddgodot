@@ -33,9 +33,9 @@ func move(delta):
 	check_off_grid()
 
 func check_off_grid():
-	if grid == null:
-		return STATUS_OK
 	if (position.x < grid.get_dim().minX || position.y < grid.get_dim().minY):
+		set_status(STATUS_OFF_GRID)
+	if (position.x > grid.get_dim().maxX || position.y > grid.get_dim().maxY):
 		set_status(STATUS_OFF_GRID)
 	
 

@@ -7,8 +7,6 @@ const GRID_SCRIPT = 'res://scripts/Grid.gd'
 
 var snake
 
-
-
 func before_each():
 	snake = load(SNAKE_SCENE).instance()
 	var dim = {'minX': 0, 'minY': 0, 'maxX': 100, 'maxY': 100}
@@ -17,7 +15,7 @@ func before_each():
 	snake.set_grid(grid)
 
 func after_each():
-	snake.queue_free()
+	snake.free()
 
 func test_snake_moves():	
 	var initial = snake.position
@@ -63,7 +61,7 @@ func test_if_snake_touches_borders_sets_game_over():
 
 	snake.set_status(snake.STATUS_OK)
 
-	snake.set_position(Vector2(99,99))
+	snake.set_position(Vector2(100,100))
 	snake.set_direction(snake.DIR_DOWN)
 	gut.simulate(snake, 1, .1)
 	assert_eq(snake.get_status(), snake.STATUS_OFF_GRID, "Snake is off grid but status is not consistent")

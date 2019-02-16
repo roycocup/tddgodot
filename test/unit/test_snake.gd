@@ -1,4 +1,5 @@
-extends "res://addons/gut/test.gd"
+
+extends "res://test/basecase.gd"
 
 const SNAKE_SCENE = 'res://scenes/Snake.tscn'
 const GRID_SCENE = 'res://scenes/Grid.tscn'
@@ -6,8 +7,7 @@ const GRID_SCRIPT = 'res://scripts/Grid.gd'
 
 var snake
 
-func _log(o):
-	gut.get_logger().debug(o)
+
 
 func before_each():
 	snake = load(SNAKE_SCENE).instance()

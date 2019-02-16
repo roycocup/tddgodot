@@ -8,9 +8,12 @@ const DIR_RIGHT = 'right'
 const STATUS_OFF_GRID = 'off_grid'
 const STATUS_OK = 'ok'
 
+var grid = null
+
 var speed = 10
 var direction = get_random_dir()
 var status = STATUS_OK
+
 
 func _ready():
 	pass
@@ -30,7 +33,9 @@ func move(delta):
 	check_off_grid()
 
 func check_off_grid():
-	if (position.x < 0 || position.y < 0):
+	if grid == null:
+		return STATUS_OK
+	if (position.x < grid.get_dim().minX || position.y < grid.get_dim().minY):
 		set_status(STATUS_OFF_GRID)
 	
 
@@ -56,3 +61,6 @@ func get_status():
 
 func set_status(st):
 	status = st
+
+func set_grid(g):
+	grid = g

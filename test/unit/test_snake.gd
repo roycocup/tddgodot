@@ -1,11 +1,22 @@
 extends "res://addons/gut/test.gd"
 
+const SNAKE_SCENE = 'res://scenes/Snake.tscn'
+const GRID_SCENE = 'res://scenes/Grid.tscn'
+const GRID_SCRIPT = 'res://scripts/Grid.gd'
+
 var snake
 
-func before_all():
-	snake = load("res://scenes/Snake.tscn").instance()
+func _log(o):
+	gut.get_logger().debug(o)
 
-func after_all():
+func before_each():
+	snake = load(SNAKE_SCENE).instance()
+	var dim = {'minX': 0, 'minY': 0, 'maxX': 100, 'maxY': 100}
+	var grid = double(GRID_SCRIPT).new()
+	stub(GRID_SCRIPT, 'get_dim').to_return(dim)
+	snake.set_grid(grid)
+
+func after_each():
 	snake.queue_free()
 
 func test_snake_moves():	
@@ -37,15 +48,27 @@ func test_snake_is_moving_in_correct_speed():
 	var expected = start[1]-( snake.speed * .1)
 	assert_eq(end[1], expected, "snake speed is not correct")
 
-func test_if_snake_touches_upper_borders_sets_game_over():
+func test_if_snake_touches_borders_sets_game_over():
 	snake.set_position(Vector2())
 	snake.set_direction(snake.DIR_UP)
 	gut.simulate(snake, 1, .1)
 	assert_eq(snake.get_status(), snake.STATUS_OFF_GRID, "Snake is off grid but status is not consistent")
 
+	snake.set_status(snake.STATUS_OK)
 
+	snake.set_position(Vector2())
+	snake.set_direction(snake.DIR_LEFT)
+	gut.simulate(snake, 1, .1)
+	assert_eq(snake.get_status(), snake.STATUS_OFF_GRID, "Snake is off grid but status is not consistent")
+
+	snake.set_status(snake.STATUS_OK)
+
+	snake.set_position(Vector2(99,99))
+	snake.set_direction(snake.DIR_DOWN)
+	gut.simulate(snake, 1, .1)
+	assert_eq(snake.get_status(), snake.STATUS_OFF_GRID, "Snake is off grid but status is not consistent")
 
 	
 
-	
+
 	

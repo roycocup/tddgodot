@@ -1,9 +1,16 @@
 extends Node2D
 
-enum {DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT}
+const DIR_UP = 'up'
+const DIR_DOWN = 'down'
+const DIR_LEFT = 'left'
+const DIR_RIGHT = 'right'
+
+const STATUS_OFF_GRID = 'off_grid'
+const STATUS_OK = 'ok'
 
 var speed = 10
 var direction = get_random_dir()
+var status = STATUS_OK
 
 func _ready():
 	pass
@@ -19,7 +26,13 @@ func move(delta):
 	if direction == DIR_LEFT:
 		position.x = position.x - (delta * speed)
 	if direction == DIR_RIGHT:
-		position.x = position.x + (delta * speed)	
+		position.x = position.x + (delta * speed)
+	check_off_grid()
+
+func check_off_grid():
+	if (position.x < 0 || position.y < 0):
+		set_status(STATUS_OFF_GRID)
+	
 
 func get_random_dir():
 	var i = randi() % 3
@@ -34,3 +47,12 @@ func get_random_dir():
 
 func set_direction(dir):
 	direction = dir
+
+func set_position(pos):
+	position = pos
+
+func get_status():
+	return status
+
+func set_status(st):
+	status = st

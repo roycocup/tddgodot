@@ -37,6 +37,13 @@ func test_snake_is_moving_in_correct_speed():
 	var expected = start[1]-( snake.speed * .1)
 	assert_eq(end[1], expected, "snake speed is not correct")
 
+func test_if_snake_touches_upper_borders_sets_game_over():
+	snake.set_position(Vector2())
+	snake.set_direction(snake.DIR_UP)
+	gut.simulate(snake, 1, .1)
+	assert_eq(snake.get_status(), snake.STATUS_OFF_GRID, "Snake is off grid but status is not consistent")
+
+
 
 	
 

@@ -8,9 +8,8 @@ var fruit
 
 func before_each():
 	fruit = load(FRUIT_SCRIPT).new()
-	var dim = {'minX': 0, 'minY': 0, 'maxX': 100, 'maxY': 100}
 	var grid = double(GRID_SCRIPT).new()
-	stub(GRID_SCRIPT, 'get_dim').to_return(dim)
+	stub(GRID_SCRIPT, 'is_inside').to_return(true)
 	fruit.set_grid(grid)
 
 func after_each():
@@ -23,4 +22,15 @@ func test_fruit_exists_in_grid():
 func test_fruit_cannot_be_double_placed():
     fruit.place_at(10, 10)
     fruit.place_at(20, 20)
-    assert_eq(fruit.position, Vector2(10, 10))
+    assert_eq(fruit.position, Vector2(10, 10), "fruit is in two places")
+
+func test_fruit_cannot_be_placed_outside_of_grid():
+    var grid = double(GRID_SCRIPT).new()
+    stub(GRID_SCRIPT, 'is_inside').to_return(false)
+    fruit.set_grid(grid)
+
+    fruit.place_at(-10, 10)
+    fruit.place_at(10, -10)
+    fruit.place_at(101, 10)
+    fruit.place_at(10, 101)
+    assert_eq(fruit.showing, false, "Fruit should not be showing as its outside the grid")

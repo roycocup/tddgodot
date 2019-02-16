@@ -2,7 +2,6 @@
 extends "res://test/basecase.gd"
 
 const SNAKE_SCENE = 'res://scenes/Snake.tscn'
-const GRID_SCENE = 'res://scenes/Grid.tscn'
 const GRID_SCRIPT = 'res://scripts/Grid.gd'
 
 var snake

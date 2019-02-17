@@ -10,13 +10,15 @@ const STATUS_OK = 'ok'
 
 var grid = null
 
-var speed = 10
+var speed = 20
 var direction = get_random_dir()
 var status = STATUS_OK
 
 
 func _ready():
-	pass
+	grid = load('res://scripts/Grid.gd').new()
+	grid.set_dim(0, 0, 100, 100)
+
 
 func _process(delta):
 	move(delta)
